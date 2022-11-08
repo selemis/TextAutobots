@@ -22,7 +22,7 @@ idea {
 }
 
 application {
-    mainClass = 'textautobots.App'
+    mainClass = 'textautobots.Run'
 }
 
 tasks.named('test') {
