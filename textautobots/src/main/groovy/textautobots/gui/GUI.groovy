@@ -56,24 +56,31 @@ class GUI extends JFrame {
         filteredList.addMouseListener(new MouseAdapter() {
             @Override
             void mouseClicked(MouseEvent e) {
-                JList<String> source = (JList<String>) e.getSource()
-                if (e.getClickCount() == 2) {
-                    int index = source.locationToIndex(e.getPoint());
-                    ListModel<String> model = source.getModel()
-                    String elementAt = model.getElementAt(index)
-                    System.out.println(elementAt)
-//                    doSomething(index)
-                }
-
+                transformText(e)
             }
         })
         JScrollPane pane = new JScrollPane(filteredList, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER);
         panel.add(pane, BorderLayout.CENTER)
-        panel.add(filteredList.getFilterField(), BorderLayout.NORTH);
+        panel.add(filteredList.getFilterField(), BorderLayout.NORTH)
         return panel
     }
 
+    private void transformText(MouseEvent e) {
+        JList<String> source = (JList<String>) e.getSource()
+        if (e.getClickCount() == 2) {
+            int index = source.locationToIndex(e.getPoint());
+            ListModel<String> model = source.getModel()
+            String elementAt = model.getElementAt(index)
+            System.out.println(elementAt)
+//          doSomething(index)
+        }
+    }
+
+    //TODO I need a registration process
+
     private FilteredJList createFilteredJList() {
+        //TODO create the text Transformation - TextAutobot interface (getName(), transformText()
+        //TODO Register text Transformations
         def listItems = [
             "Chris" , "Joshua" , "Daniel" , "Michael"
         ]
