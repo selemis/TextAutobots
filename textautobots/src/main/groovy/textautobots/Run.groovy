@@ -5,6 +5,9 @@ import textautobots.gui.GUI
 class Run {
 
     static void main(String[] args) {
-        new GUI()
+        def textAutobots = [
+                new CamelCase()
+        ]
+        new GUI(textAutobots)
     }
 }

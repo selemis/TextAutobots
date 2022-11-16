@@ -2,7 +2,7 @@ package textautobots
 
 import org.apache.commons.text.CaseUtils
 
-class CamelCase {
+class CamelCase implements TextAutobot {
 
     String name() {
         "Camel Case"

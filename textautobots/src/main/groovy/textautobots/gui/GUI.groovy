@@ -1,5 +1,7 @@
 package textautobots.gui
 
+import textautobots.TextAutobot
+
 import javax.swing.*
 import java.awt.*
 import java.awt.event.MouseAdapter
@@ -10,7 +12,10 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
 
 class GUI extends JFrame {
 
-    GUI() throws HeadlessException {
+    java.util.List<TextAutobot> textAutobots;
+
+    GUI(java.util.List<TextAutobot> textAutobots) throws HeadlessException {
+        this.textAutobots = textAutobots;
         setDefaultCloseOperation(EXIT_ON_CLOSE)
         setTitle("Text Autobots")
         getContentPane().setLayout(new BorderLayout())
@@ -76,20 +81,11 @@ class GUI extends JFrame {
         }
     }
 
-    //TODO I need a registration process
-
     private FilteredJList createFilteredJList() {
-        //TODO create the text Transformation - TextAutobot interface (getName(), transformText()
-        //TODO Register text Transformations
-        def listItems = [
-            "Chris" , "Joshua" , "Daniel" , "Michael"
-        ]
-
         FilteredJList list = new FilteredJList();
-        listItems.each {
-            list.addItem(it)
-        }
-
+        textAutobots
+                .collect({ it.name()})
+                .each {list.addItem(it)}
 
         return list;
     }
