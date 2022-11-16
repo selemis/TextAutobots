@@ -1,9 +1,21 @@
 package textautobots
 
-interface TextAutobot {
+abstract class TextAutobot {
 
-    String name();
+    abstract String name();
 
-    String transform(String input);
+    abstract String transform(String input);
 
+    @Override
+    boolean equals(Object obj) {
+        if (obj instanceof TextAutobot)
+            if (obj.name() == name())
+                return true;
+
+        return false;
+    }
+
+    int hashCode() {
+        return (name() != null ? name().hashCode() : 0)
+    }
 }
