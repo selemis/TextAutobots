@@ -1,6 +1,6 @@
 package textautobots.gui
 
-import textautobots.TextAutobot
+import textautobots.bots.TextAutobot
 
 import javax.swing.*
 import java.awt.*

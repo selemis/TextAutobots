@@ -1,4 +1,4 @@
-package textautobots
+package textautobots.bots
 
 import org.apache.commons.text.CaseUtils
 

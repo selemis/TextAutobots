@@ -1,6 +1,8 @@
+package textautobots.bots
+
 import spock.lang.Specification
 import spock.lang.Unroll
-import textautobots.CamelCase
+import textautobots.bots.CamelCase
 
 class CamelCaseSpec extends Specification {
 

@@ -1,6 +1,8 @@
+package textautobots.bots
+
 import spock.lang.Specification
 import spock.lang.Unroll
-import textautobots.KebabCase
+import textautobots.bots.KebabCase
 
 class KebabCaseSpec extends Specification {
 

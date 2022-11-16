@@ -1,4 +1,4 @@
-package textautobots
+package textautobots.bots
 
 abstract class TextAutobot {
 

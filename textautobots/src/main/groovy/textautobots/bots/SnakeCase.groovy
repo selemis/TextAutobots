@@ -1,17 +1,18 @@
-package textautobots
+package textautobots.bots
 
-class KebabCase extends TextAutobot{
+class SnakeCase extends TextAutobot {
     @Override
     String name() {
-        return "Kebab Case"
+        return "Snake Case"
     }
 
     @Override
     String transform(String input) {
-        camelToKebab(new CamelCase().transform(input))
+        String camelCase = new CamelCase().transform(input)
+        camelToSnake(camelCase)
     }
 
-    private String camelToKebab(String str) {
+    private String camelToSnake(String str) {
         String result = ""
         char c = str.charAt(0)
         result += Character.toLowerCase(c)
@@ -19,7 +20,7 @@ class KebabCase extends TextAutobot{
         for (int i = 1; i < str.length(); i++) {
             char ch = str.charAt(i)
             if (Character.isUpperCase(ch)) {
-                result +=  '-' + Character.toLowerCase(ch)
+                result +=  '_' + Character.toLowerCase(ch)
             }
             else {
                 result += ch
@@ -28,4 +29,5 @@ class KebabCase extends TextAutobot{
 
         return result
     }
+
 }

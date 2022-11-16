@@ -1,6 +1,8 @@
+package textautobots.bots
+
 import spock.lang.Specification
 import spock.lang.Unroll
-import textautobots.SnakeCase
+import textautobots.bots.SnakeCase
 
 class SnakeCaseSpec extends Specification {
 

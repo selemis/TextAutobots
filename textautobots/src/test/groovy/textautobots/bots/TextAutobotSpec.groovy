@@ -1,4 +1,6 @@
-import textautobots.TextAutobot
+package textautobots.bots
+
+import textautobots.bots.TextAutobot
 
 class TextAutobotSpec extends spock.lang.Specification {
 
