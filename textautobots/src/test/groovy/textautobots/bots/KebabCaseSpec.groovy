@@ -17,6 +17,8 @@ class KebabCaseSpec extends Specification {
         kebabCase.name() == "Kebab Case"
     }
 
+
+    //TODO handle empty string and null
     @Unroll
     def "to kebab case"() {
         expect:

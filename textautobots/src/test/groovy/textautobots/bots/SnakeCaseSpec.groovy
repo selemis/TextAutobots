@@ -17,6 +17,7 @@ class SnakeCaseSpec extends Specification {
         snakeCase.name() == "Snake Case"
     }
 
+    //TODO handle empty string and null
     @Unroll
     def "to snake case"() {
         expect:

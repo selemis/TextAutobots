@@ -3,6 +3,7 @@ package textautobots.gui
 import textautobots.bots.TextAutobot
 
 import javax.swing.*
+import javax.swing.border.EmptyBorder
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -29,7 +30,8 @@ class GUI extends JFrame {
 
     private JPanel textAreasPanel() {
         JPanel panel = new JPanel()
-        BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10))
+        BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS)
         panel.setLayout(boxLayout)
         panel.add(sourceTextAreaPanel())
         panel.add(resultsTextAreaPanel())
@@ -38,8 +40,12 @@ class GUI extends JFrame {
 
     private JPanel sourceTextAreaPanel() {
         JPanel panel = new JPanel()
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10))
         panel.setLayout(new BorderLayout())
         JLabel label = new JLabel("Source Text")
+        label.setFont(new Font("Serif", Font.BOLD, 28))
+        label.setHorizontalAlignment( SwingConstants.CENTER )
+        label.setForeground(Color.BLUE)
         sourceTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
         panel.add(sourceTextArea, BorderLayout.CENTER)
@@ -49,7 +55,11 @@ class GUI extends JFrame {
     private JPanel resultsTextAreaPanel() {
         JPanel panel = new JPanel()
         panel.setLayout(new BorderLayout())
-        JLabel label = new JLabel("Results")
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10))
+        JLabel label = new JLabel("Result Text")
+        label.setFont(new Font("Serif", Font.BOLD, 28))
+        label.setHorizontalAlignment( SwingConstants.CENTER )
+        label.setForeground(Color.RED)
         resultsTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
         panel.add(resultsTextArea, BorderLayout.CENTER)
@@ -58,6 +68,7 @@ class GUI extends JFrame {
 
     private JPanel createFilterListPanel() {
         JPanel panel = new JPanel()
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10))
         panel.setLayout(new BorderLayout())
         FilteredJList filteredList = createFilteredJList()
         filteredList.addMouseListener(new MouseAdapter() {
