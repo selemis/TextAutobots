@@ -13,6 +13,8 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
 class GUI extends JFrame {
 
     java.util.List<TextAutobot> textAutobots;
+    JTextArea sourceTextArea
+    JTextArea resultsTextArea
 
     GUI(java.util.List<TextAutobot> textAutobots) throws HeadlessException {
         this.textAutobots = textAutobots;
@@ -38,9 +40,9 @@ class GUI extends JFrame {
         JPanel panel = new JPanel()
         panel.setLayout(new BorderLayout())
         JLabel label = new JLabel("Source Text")
-        JTextArea textArea = new JTextArea(5, 80)
+        sourceTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
-        panel.add(textArea, BorderLayout.CENTER)
+        panel.add(sourceTextArea, BorderLayout.CENTER)
         panel
     }
 
@@ -48,9 +50,9 @@ class GUI extends JFrame {
         JPanel panel = new JPanel()
         panel.setLayout(new BorderLayout())
         JLabel label = new JLabel("Results")
-        JTextArea textArea = new JTextArea(5, 80)
+        resultsTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
-        panel.add(textArea, BorderLayout.CENTER)
+        panel.add(resultsTextArea, BorderLayout.CENTER)
         panel
     }
 
@@ -76,8 +78,9 @@ class GUI extends JFrame {
             int index = source.locationToIndex(e.getPoint());
             ListModel<String> model = source.getModel()
             String elementAt = model.getElementAt(index)
-            System.out.println(elementAt)
-//          doSomething(index)
+            TextAutobot bot = textAutobots.find { it.name() == elementAt}
+            String result = bot.transform(sourceTextArea.getText())
+            resultsTextArea.setText(result);
         }
     }
 
