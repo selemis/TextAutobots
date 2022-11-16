@@ -6,7 +6,8 @@ class Run {
 
     static void main(String[] args) {
         def textAutobots = [
-                new CamelCase()
+                new CamelCase(),
+                new SnakeCase(),
         ]
         new GUI(textAutobots)
     }
