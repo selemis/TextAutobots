@@ -2,7 +2,11 @@ plugins {
     id 'groovy'
     id 'application'
     id 'idea'
+    id 'maven-publish'
 }
+
+group 'org.example'
+version '0.1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -15,6 +19,17 @@ dependencies {
 
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
     testImplementation 'junit:junit:4.13.2'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
 }
 
 idea {
