@@ -1,6 +1,6 @@
 package textautobots.bots
 
-class KebabCase extends TextAutobot{
+class KebabCase extends TextAutobot {
     @Override
     String name() {
         return "Kebab Case"
@@ -9,9 +9,10 @@ class KebabCase extends TextAutobot{
     @Override
     String transform(String input) {
         input.toLowerCase().trim().replaceAll(" +", " ")
-        .replaceAll(" ", "-")
-        .replaceAll("\\.", "-")
-        .replaceAll("_", "-")
+                .replaceAll(" ", "-")
+                .replaceAll("\\.", "-")
+                .replaceAll("_", "-")
+                .replaceAll("---", "-")
     }
 
 }
