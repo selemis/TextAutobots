@@ -16,6 +16,8 @@ class GUI extends JFrame {
     java.util.List<TextAutobot> textAutobots;
     JTextArea sourceTextArea
     JTextArea resultsTextArea
+    SettingsProperties settingsProperties = new SettingsProperties();
+
 
     GUI(java.util.List<TextAutobot> textAutobots) throws HeadlessException {
         this.textAutobots = textAutobots;
@@ -24,8 +26,18 @@ class GUI extends JFrame {
         getContentPane().setLayout(new BorderLayout())
         getContentPane().add(textAreasPanel(), BorderLayout.CENTER)
         getContentPane().add(createFilterListPanel(), BorderLayout.EAST)
-        setSize(800, 600)
+        getContentPane().add(createSettingsPanel(), BorderLayout.SOUTH);
+        settingsProperties.loadSettingsProperties();
+        configureFont()
+        int width = Integer.valueOf(settingsProperties.getProperty("mainWindowWidth", "800"))
+        setSize(width, 600)
         setVisible(true)
+    }
+
+    public void font(String fontName, int fontSize) {
+        Font font = new Font(fontName, Font.PLAIN, fontSize);
+        sourceTextArea.setFont(font);
+        resultsTextArea.setFont(font);
     }
 
     private JPanel textAreasPanel() {
@@ -44,7 +56,7 @@ class GUI extends JFrame {
         panel.setLayout(new BorderLayout())
         JLabel label = new JLabel("Source Text")
         label.setFont(new Font("Serif", Font.BOLD, 28))
-        label.setHorizontalAlignment( SwingConstants.CENTER )
+        label.setHorizontalAlignment(SwingConstants.CENTER)
         label.setForeground(Color.BLUE)
         sourceTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
@@ -58,7 +70,7 @@ class GUI extends JFrame {
         panel.setBorder(new EmptyBorder(10, 10, 10, 10))
         JLabel label = new JLabel("Result Text")
         label.setFont(new Font("Serif", Font.BOLD, 28))
-        label.setHorizontalAlignment( SwingConstants.CENTER )
+        label.setHorizontalAlignment(SwingConstants.CENTER)
         label.setForeground(Color.RED)
         resultsTextArea = new JTextArea(5, 80)
         panel.add(label, BorderLayout.NORTH)
@@ -83,13 +95,21 @@ class GUI extends JFrame {
         return panel
     }
 
+    private JPanel createSettingsPanel() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton fontButton = new JButton("Settings");
+        fontButton.addActionListener(e -> new SettingsFrame(this, settingsProperties, sourceTextArea, resultsTextArea));
+        panel.add(fontButton);
+        return panel;
+    }
+
     private void transformText(MouseEvent e) {
         JList<String> source = (JList<String>) e.getSource()
         if (e.getClickCount() == 2) {
             int index = source.locationToIndex(e.getPoint());
             ListModel<String> model = source.getModel()
             String elementAt = model.getElementAt(index)
-            TextAutobot bot = textAutobots.find { it.name() == elementAt}
+            TextAutobot bot = textAutobots.find { it.name() == elementAt }
             String result = bot.transform(sourceTextArea.getText())
             resultsTextArea.setText(result);
         }
@@ -98,10 +118,16 @@ class GUI extends JFrame {
     private FilteredJList createFilteredJList() {
         FilteredJList list = new FilteredJList();
         textAutobots
-                .collect({ it.name()})
-                .each {list.addItem(it)}
+                .collect({ it.name() })
+                .each { list.addItem(it) }
 
         return list;
+    }
+
+    private void configureFont() {
+        String fontName = settingsProperties.getProperty("fontName", "Serif");
+        int fontSize = Integer.parseInt(settingsProperties.getProperty("fontSize", "14"));
+        font(fontName, fontSize)
     }
 
 
