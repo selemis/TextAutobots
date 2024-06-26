@@ -1,7 +1,13 @@
 package textautobots.gui
 
 class SettingsProperties extends Properties {
-    final String propertiesFilePath = "settings.properties";
+
+    public static final String FONT_NAME = "fontName"
+    public static final String FONT_SIZE = "fontSize"
+    public static final String WINDOW_WIDTH = "windowWidth"
+    public static final String WINDOW_HEIGHT = "windowHeight"
+    final String propertiesFilePath = "settings.properties"
+
 
     public void loadSettingsProperties() {
         try {

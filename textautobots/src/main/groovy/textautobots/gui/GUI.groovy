@@ -13,11 +13,20 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
 
 class GUI extends JFrame {
 
+    public static final String DEFAULT_WIDTH = "800"
+    public static final String DEFAULT_HEIGHT = "600"
+    public static final String DEFAULT_FONT_NAME = "Serif"
+    public static final String DEFAULT_FONT_SIZE = "14"
+
     java.util.List<TextAutobot> textAutobots;
     JTextArea sourceTextArea
     JTextArea resultsTextArea
-    SettingsProperties settingsProperties = new SettingsProperties();
-
+    SettingsProperties settingsProperties = new SettingsProperties()
+    FilteredJList filteredList
+    Font font
+    JLabel sourceTextLabel
+    JLabel resultTextLabel
+    JButton fontButton
 
     GUI(java.util.List<TextAutobot> textAutobots) throws HeadlessException {
         this.textAutobots = textAutobots;
@@ -29,8 +38,8 @@ class GUI extends JFrame {
         getContentPane().add(createSettingsPanel(), BorderLayout.SOUTH);
         settingsProperties.loadSettingsProperties();
         configureFont()
-        int width = Integer.valueOf(settingsProperties.getProperty("mainWindowWidth", "800"))
-        int height = Integer.valueOf(settingsProperties.getProperty("mainWindowHeight", "800"))
+        int width = Integer.valueOf(settingsProperties.getProperty(SettingsProperties.WINDOW_WIDTH, DEFAULT_WIDTH))
+        int height = Integer.valueOf(settingsProperties.getProperty(SettingsProperties.WINDOW_HEIGHT, DEFAULT_HEIGHT))
         windowSize(width, height)
         setVisible(true)
     }
@@ -40,9 +49,14 @@ class GUI extends JFrame {
     }
 
     public void font(String fontName, int fontSize) {
-        Font font = new Font(fontName, Font.PLAIN, fontSize);
-        sourceTextArea.setFont(font);
-        resultsTextArea.setFont(font);
+        font = new Font(fontName, Font.PLAIN, fontSize);
+        Font labelsFont = new Font(font.getFontName(), Font.BOLD, fontSize + 5)
+        resultTextLabel.setFont(labelsFont)
+        sourceTextLabel.setFont(labelsFont)
+        fontButton.setFont(font)
+        filteredList.setFont(font)
+        sourceTextArea.setFont(font)
+        resultsTextArea.setFont(font)
     }
 
     private JPanel textAreasPanel() {
@@ -59,12 +73,11 @@ class GUI extends JFrame {
         JPanel panel = new JPanel()
         panel.setBorder(new EmptyBorder(10, 10, 10, 10))
         panel.setLayout(new BorderLayout())
-        JLabel label = new JLabel("Source Text")
-        label.setFont(new Font("Serif", Font.BOLD, 28))
-        label.setHorizontalAlignment(SwingConstants.CENTER)
-        label.setForeground(Color.BLUE)
+        sourceTextLabel = new JLabel("Source Text")
+        sourceTextLabel.setHorizontalAlignment(SwingConstants.CENTER)
+        sourceTextLabel.setForeground(Color.BLUE)
         sourceTextArea = new JTextArea(5, 80)
-        panel.add(label, BorderLayout.NORTH)
+        panel.add(sourceTextLabel, BorderLayout.NORTH)
         panel.add(sourceTextArea, BorderLayout.CENTER)
         panel
     }
@@ -73,12 +86,11 @@ class GUI extends JFrame {
         JPanel panel = new JPanel()
         panel.setLayout(new BorderLayout())
         panel.setBorder(new EmptyBorder(10, 10, 10, 10))
-        JLabel label = new JLabel("Result Text")
-        label.setFont(new Font("Serif", Font.BOLD, 28))
-        label.setHorizontalAlignment(SwingConstants.CENTER)
-        label.setForeground(Color.RED)
+        resultTextLabel = new JLabel("Result Text")
+        resultTextLabel.setHorizontalAlignment(SwingConstants.CENTER)
+        resultTextLabel.setForeground(Color.RED)
         resultsTextArea = new JTextArea(5, 80)
-        panel.add(label, BorderLayout.NORTH)
+        panel.add(resultTextLabel, BorderLayout.NORTH)
         panel.add(resultsTextArea, BorderLayout.CENTER)
         panel
     }
@@ -87,7 +99,7 @@ class GUI extends JFrame {
         JPanel panel = new JPanel()
         panel.setBorder(new EmptyBorder(10, 10, 10, 10))
         panel.setLayout(new BorderLayout())
-        FilteredJList filteredList = createFilteredJList()
+        filteredList = createFilteredJList()
         filteredList.addMouseListener(new MouseAdapter() {
             @Override
             void mouseClicked(MouseEvent e) {
@@ -102,7 +114,7 @@ class GUI extends JFrame {
 
     private JPanel createSettingsPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton fontButton = new JButton("Settings");
+        fontButton = new JButton("Settings");
         fontButton.addActionListener(e -> new SettingsFrame(this, settingsProperties));
         panel.add(fontButton);
         return panel;
@@ -130,10 +142,9 @@ class GUI extends JFrame {
     }
 
     private void configureFont() {
-        String fontName = settingsProperties.getProperty("fontName", "Serif");
-        int fontSize = Integer.parseInt(settingsProperties.getProperty("fontSize", "14"));
+        String fontName = settingsProperties.getProperty(SettingsProperties.FONT_NAME, DEFAULT_FONT_NAME);
+        int fontSize = Integer.parseInt(settingsProperties.getProperty(SettingsProperties.FONT_SIZE, DEFAULT_FONT_SIZE));
         font(fontName, fontSize)
     }
-
 
 }

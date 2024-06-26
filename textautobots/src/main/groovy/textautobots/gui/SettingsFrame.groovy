@@ -3,7 +3,7 @@ package textautobots.gui
 import javax.swing.*
 import java.awt.*
 
-class SettingsFrame extends JFrame{
+class SettingsFrame extends JFrame {
 
     SettingsProperties settingsProperties
     GUI mainFrame
@@ -16,9 +16,9 @@ class SettingsFrame extends JFrame{
     SettingsFrame(GUI mainFrame, SettingsProperties settingsProperties) {
         this.settingsProperties = settingsProperties
         this.mainFrame = mainFrame
-        setTitle("Settings");
-        setSize(300, 200);
-        setLocationRelativeTo(mainFrame);
+        setTitle("Settings")
+        setSize(300, 200)
+        setLocationRelativeTo(mainFrame)
         setLayout(new BorderLayout(10, 10));
 
         createFontComboBox()
@@ -26,24 +26,24 @@ class SettingsFrame extends JFrame{
         createMainWindowWidthTextField()
         createMainWindowHeightTextField()
         createApplyButton()
-        add(createMainPanel(), BorderLayout.CENTER);
+        add(createMainPanel(), BorderLayout.CENTER)
 
-        setVisible(true);
+        setVisible(true)
     }
 
     private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(createRow(createFontLabel(), fontTypeComboBox));
-        mainPanel.add(createRow(createFontSizeLabel(), fontSizeComboBox));
-        mainPanel.add(createRow(createMainWindowWidthLabel(), mainWindowWidthField));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS))
+        mainPanel.add(createRow(createFontLabel(), fontTypeComboBox))
+        mainPanel.add(createRow(createFontSizeLabel(), fontSizeComboBox))
+        mainPanel.add(createRow(createMainWindowWidthLabel(), mainWindowWidthField))
         mainPanel.add(createRow(createMainWindowHeightLabel(), mainWindowHeightField))
-        mainPanel.add(applyButton);
+        mainPanel.add(applyButton)
         mainPanel
     }
 
     private JButton createApplyButton() {
-        applyButton = new JButton("Apply Font");
+        applyButton = new JButton("Apply Settings");
         applyButton.addActionListener(e -> {
             String fontName = (String) fontTypeComboBox.getSelectedItem();
             int fontSize = (Integer) fontSizeComboBox.getSelectedItem();
@@ -51,10 +51,10 @@ class SettingsFrame extends JFrame{
 
             try {
                 applyMainWindowSize();
-                settingsProperties.setProperty("fontName", fontName);
-                settingsProperties.setProperty("fontSize", String.valueOf(fontSize));
-                settingsProperties.setProperty("windowWidth", mainWindowWidthField.getText());
-                settingsProperties.setProperty("windowHeight", mainWindowHeightField.getText());
+                settingsProperties.setProperty(SettingsProperties.FONT_NAME, fontName);
+                settingsProperties.setProperty(SettingsProperties.FONT_SIZE, String.valueOf(fontSize));
+                settingsProperties.setProperty(SettingsProperties.WINDOW_WIDTH, mainWindowWidthField.getText());
+                settingsProperties.setProperty(SettingsProperties.WINDOW_HEIGHT, mainWindowHeightField.getText());
                 settingsProperties.saveSettingsProperties();
                 dispose(); // Close the settings frame
             } catch (NumberFormatException nfe) {
@@ -76,19 +76,19 @@ class SettingsFrame extends JFrame{
 
     private void createMainWindowWidthTextField() {
         mainWindowWidthField = new JTextField(5);
-        mainWindowWidthField.setText(settingsProperties.getProperty("windowWidth", "800"));
+        mainWindowWidthField.setText(settingsProperties.getProperty(SettingsProperties.WINDOW_WIDTH, GUI.DEFAULT_WIDTH));
     }
 
-    private void createMainWindowHeightTextField(){
+    private void createMainWindowHeightTextField() {
         mainWindowHeightField = new JTextField(5);
-        mainWindowHeightField.setText(settingsProperties.getProperty("windowHeight", "600"));
+        mainWindowHeightField.setText(settingsProperties.getProperty(SettingsProperties.WINDOW_HEIGHT, GUI.DEFAULT_HEIGHT));
     }
 
     private JLabel createMainWindowWidthLabel() {
         new JLabel("Main Window Width:")
     }
 
-    private JLabel createMainWindowHeightLabel()  {
+    private JLabel createMainWindowHeightLabel() {
         new JLabel("Main Window Height:")
     }
 
@@ -98,12 +98,12 @@ class SettingsFrame extends JFrame{
 
     private void createFontComboBox() {
         fontTypeComboBox = new JComboBox<>(new String[]{"Serif", "SansSerif", "Monospaced"});
-        fontTypeComboBox.setSelectedItem(settingsProperties.getProperty("fontName", "Serif"));
+        fontTypeComboBox.setSelectedItem(settingsProperties.getProperty(SettingsProperties.FONT_NAME, GUI.DEFAULT_FONT_NAME));
     }
 
     private void createFontSizeComboBox() {
         fontSizeComboBox = new JComboBox<>(new Integer[]{12, 14, 16, 18, 20, 22, 24, 26, 28, 30});
-        fontSizeComboBox.setSelectedItem(Integer.valueOf(settingsProperties.getProperty("fontSize", "14")));
+        fontSizeComboBox.setSelectedItem(Integer.valueOf(settingsProperties.getProperty(SettingsProperties.FONT_SIZE, GUI.DEFAULT_FONT_SIZE)));
     }
 
     private JLabel createFontLabel() {
@@ -116,5 +116,4 @@ class SettingsFrame extends JFrame{
         row.add(field);
         return row;
     }
-
 }
