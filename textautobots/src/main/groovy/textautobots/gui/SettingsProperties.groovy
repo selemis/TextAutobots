@@ -12,10 +12,7 @@ class SettingsProperties extends Properties {
         }
     }
 
-     public void saveSettingsProperties(String fontName, int fontSize, String width) {
-        setProperty("fontName", fontName);
-        setProperty("fontSize", String.valueOf(fontSize));
-        setProperty("windowWidth", width);
+     public void saveSettingsProperties() {
          try (FileOutputStream out = new FileOutputStream(propertiesFilePath)) {
              store(out, "Settings");
          } catch (IOException e) {

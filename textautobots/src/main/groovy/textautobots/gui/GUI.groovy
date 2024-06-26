@@ -30,8 +30,13 @@ class GUI extends JFrame {
         settingsProperties.loadSettingsProperties();
         configureFont()
         int width = Integer.valueOf(settingsProperties.getProperty("mainWindowWidth", "800"))
-        setSize(width, 600)
+        int height = Integer.valueOf(settingsProperties.getProperty("mainWindowHeight", "800"))
+        windowSize(width, height)
         setVisible(true)
+    }
+
+    public void windowSize(int width, int height) {
+        setSize(width, height)
     }
 
     public void font(String fontName, int fontSize) {
@@ -98,7 +103,7 @@ class GUI extends JFrame {
     private JPanel createSettingsPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton fontButton = new JButton("Settings");
-        fontButton.addActionListener(e -> new SettingsFrame(this, settingsProperties, sourceTextArea, resultsTextArea));
+        fontButton.addActionListener(e -> new SettingsFrame(this, settingsProperties));
         panel.add(fontButton);
         return panel;
     }
